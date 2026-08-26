@@ -1,0 +1,60 @@
+{%- liquid
+  assign current_product = product | default: section.settings.featured_product
+-%}
+{%- if section.settings.show_announcement -%}
+  <div class="announcement-bar">
+    {%- if section.settings.announcement_link != blank -%}
+      <a href="{{ section.settings.announcement_link }}">{{ section.settings.announcement_text }}</a>
+    {%- else -%}
+      <p>{{ section.settings.announcement_text }}</p>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+<header class="site-header">
+  <div class="wrap site-header__top">
+    <a href="{{ routes.search_url }}" class="site-header__icon-link" aria-label="Buscar">{% render 'icon-search' %}</a>
+
+    <a href="{{ routes.root_url }}" class="site-header__brand">
+      {%- assign header_logo = section.settings.logo | default: settings.logo -%}
+      {%- if header_logo -%}
+        <img src="{{ header_logo | image_url: width: 220 }}" alt="{{ shop.name }}" class="site-header__logo" width="{{ section.settings.logo_width }}" height="{{ section.settings.logo_width | divided_by: header_logo.aspect_ratio | round }}" loading="eager">
+      {%- else -%}
+        <span class="site-header__wordmark">{{ section.settings.brand_text | default: settings.brand_text | default: shop.name }}</span>
+      {%- endif -%}
+      {%- if section.settings.brand_subtitle != blank -%}
+        <span class="site-header__subtitle">{{ section.settings.brand_subtitle }}</span>
+      {%- endif -%}
+    </a>
+
+    <div class="site-header__icons">
+      <a href="{{ routes.account_url }}" class="site-header__icon-link" aria-label="Mi cuenta">{% render 'icon-account' %}</a>
+      <a href="{{ routes.cart_url }}" class="site-header__icon-link" aria-label="Ver carrito" data-cart-link>
+        {% render 'icon-cart' %}
+        <span class="site-header__cart-count" data-cart-count>{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+
+  <nav class="site-header__nav" aria-label="Navegación principal">
+    <a href="{{ routes.root_url }}" class="nav-tab{% if request.page_type == 'index' %} is-active{% endif %}">Inicio</a>
+    <a href="{{ current_product.url | default: routes.root_url }}" class="nav-tab{% if request.page_type == 'product' %} is-active{% endif %}">{{ current_product.title | default: 'Producto' }}</a>
+    <a href="{{ section.settings.contact_url | default: '/pages/contacto' }}" class="nav-tab{% if page and page.handle == 'contacto' %} is-active{% endif %}">Contacto</a>
+  </nav>
+</header>
+
+{% schema %}
+{
+  "name": "Cabecera",
+  "settings": [
+    { "type": "checkbox", "id": "show_announcement", "label": "Mostrar barra de aviso", "default": true },
+    { "type": "text", "id": "announcement_text", "label": "Texto del aviso", "default": "Oferta de lanzamiento: 50% dto. + envío gratis" },
+    { "type": "url", "id": "announcement_link", "label": "Enlace del aviso (opcional)" },
+    { "type": "image_picker", "id": "logo", "label": "Logo (opcional)" },
+    { "type": "range", "id": "logo_width", "label": "Ancho del logo (px)", "min": 60, "max": 260, "step": 10, "default": 150 },
+    { "type": "text", "id": "brand_text", "label": "Nombre de marca (si no hay logo)", "default": "Tu Marca" },
+    { "type": "text", "id": "brand_subtitle", "label": "Subtítulo bajo el nombre", "default": "" },
+    { "type": "url", "id": "contact_url", "label": "Enlace de la pestaña Contacto" }
+  ]
+}
+{% endschema %}

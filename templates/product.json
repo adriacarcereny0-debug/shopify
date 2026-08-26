@@ -1,0 +1,70 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "status_badge": "PRODUCTO DESTACADO | POCAS UNIDADES",
+        "show_rating": true,
+        "rating": 4.8,
+        "review_summary": "+891 reseñas de más de 17.500 clientes",
+        "bundle_label": "El mejor precio del año",
+        "cta_text": "Añadir al carrito",
+        "urgency_label": "Pocas unidades.",
+        "urgency_text": "límite de 4 unidades por pedido",
+        "authenticity_label": "Solo disponible aquí.",
+        "authenticity_text": "no compres en canales no oficiales"
+      },
+      "blocks": {
+        "badge1": { "type": "pill_badge", "settings": { "text": "MÁS VENDIDO", "show_icon": false } },
+        "badge2": { "type": "pill_badge", "settings": { "text": "FORMULADO EN ESPAÑA", "show_icon": true } },
+        "bundle1": { "type": "bundle_option", "settings": { "title": "Compra 1", "subtitle": "Envío gratis", "price": "39,00 €", "compare_price": "", "ribbon": "", "quantity": 1 } },
+        "bundle2": { "type": "bundle_option", "settings": { "title": "Compra 2, llévate 1 gratis", "subtitle": "Ahorras 39,00 € + envío gratis", "price": "78,00 €", "compare_price": "117,00 €", "ribbon": "MÁS ELEGIDO", "quantity": 3 } },
+        "overlay1": { "type": "overlay_badge", "settings": { "position": "top-right", "line1": "2M+", "line2": "Unidades vendidas" } },
+        "perk1": { "type": "perk_icon", "settings": { "icon": "heart", "label": "Guardar en favoritos" } },
+        "perk2": { "type": "perk_icon", "settings": { "icon": "repeat", "label": "Suscríbete y ahorra" } },
+        "perk3": { "type": "perk_icon", "settings": { "icon": "truck", "label": "Envío en 24–48h" } }
+      },
+      "block_order": ["badge1", "badge2", "bundle1", "bundle2", "overlay1", "perk1", "perk2", "perk3"]
+    },
+    "story": {
+      "type": "product-story",
+      "settings": {
+        "eyebrow": "El proceso",
+        "heading": "Hecho para durar",
+        "body": "<p>Cuenta aquí la historia, los materiales o el proceso detrás de tu producto. Este bloque es completamente editable desde el editor de temas.</p>"
+      }
+    },
+    "notes": {
+      "type": "field-notes",
+      "settings": { "heading": "Notas de producto" },
+      "blocks": {
+        "row1": { "type": "row", "settings": { "label": "Material", "value": "Algodón orgánico 100%" } },
+        "row2": { "type": "row", "settings": { "label": "Cuidado", "value": "Lavar a mano, secar a la sombra" } },
+        "row3": { "type": "row", "settings": { "label": "Origen", "value": "Diseñado y hecho en España" } },
+        "row4": { "type": "row", "settings": { "label": "Envío", "value": "24–48h en península" } }
+      },
+      "block_order": ["row1", "row2", "row3", "row4"]
+    },
+    "reviews": {
+      "type": "testimonials",
+      "settings": { "heading": "Lo que dicen" },
+      "blocks": {
+        "r1": { "type": "review", "settings": { "rating": 5, "quote": "Un producto que cumple lo que promete, con un acabado impecable.", "name": "Marta G.", "detail": "Barcelona" } },
+        "r2": { "type": "review", "settings": { "rating": 5, "quote": "Llegó rapidísimo y la calidad sorprende para el precio.", "name": "Jordi P.", "detail": "Valencia" } },
+        "r3": { "type": "review", "settings": { "rating": 4, "quote": "Justo lo que buscaba, volveré a comprar.", "name": "Laia S.", "detail": "Madrid" } }
+      },
+      "block_order": ["r1", "r2", "r3"]
+    },
+    "faq": {
+      "type": "faq",
+      "settings": { "heading": "Preguntas frecuentes" },
+      "blocks": {
+        "q1": { "type": "question", "settings": { "question": "¿Cuánto tarda el envío?", "answer": "<p>Los pedidos en península llegan en 24–48h laborables.</p>" } },
+        "q2": { "type": "question", "settings": { "question": "¿Puedo devolverlo?", "answer": "<p>Sí, tienes 30 días desde la recepción para devolverlo sin coste.</p>" } },
+        "q3": { "type": "question", "settings": { "question": "¿Qué métodos de pago aceptáis?", "answer": "<p>Tarjeta, Apple Pay, Google Pay y el resto de métodos habilitados en tu tienda.</p>" } }
+      },
+      "block_order": ["q1", "q2", "q3"]
+    }
+  },
+  "order": ["main", "story", "notes", "reviews", "faq"]
+}

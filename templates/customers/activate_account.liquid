@@ -1,0 +1,20 @@
+<section class="simple-content account">
+  <div class="wrap wrap--narrow">
+    <p class="eyebrow">Mi cuenta</p>
+    <h1 class="simple-content__heading">Activar tu cuenta</h1>
+    <p class="account__note">Crea una contraseña para terminar de activar tu cuenta.</p>
+    {% form 'activate_customer_password' %}
+      {{ form.errors | default_errors }}
+      <div class="form-field">
+        <label for="activate-password">Contraseña</label>
+        <input type="password" id="activate-password" name="customer[password]" autocomplete="new-password" required>
+      </div>
+      <div class="form-field">
+        <label for="activate-password-confirm">Repite la contraseña</label>
+        <input type="password" id="activate-password-confirm" name="customer[password_confirmation]" autocomplete="new-password" required>
+      </div>
+      <button type="submit" class="btn btn--cta"><span>Activar cuenta</span></button>
+      <button type="submit" name="decline" class="account__link">No, gracias</button>
+    {% endform %}
+  </div>
+</section>

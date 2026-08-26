@@ -1,0 +1,258 @@
+{%- liquid
+  assign current_product = product | default: section.settings.featured_product
+-%}
+
+{%- if current_product == blank -%}
+  <section class="product-empty reveal">
+    <div class="wrap">
+      <p class="eyebrow">Configuración pendiente</p>
+      <h2>Todavía no hay producto asignado</h2>
+      <p class="product-empty__note">Abre el editor de temas, entra en esta sección ("Producto") y elige tu producto en el ajuste <strong>“Producto destacado”</strong>. En la página de producto de Shopify esta sección se completa automáticamente.</p>
+    </div>
+  </section>
+{%- else -%}
+  {%- assign current_variant = current_product.selected_or_first_available_variant -%}
+  {%- assign bundle_blocks = section.blocks | where: 'type', 'bundle_option' -%}
+  {%- assign badge_blocks = section.blocks | where: 'type', 'pill_badge' -%}
+  {%- assign overlay_blocks = section.blocks | where: 'type', 'overlay_badge' -%}
+  {%- assign perk_blocks = section.blocks | where: 'type', 'perk_icon' -%}
+
+  <section class="product-hero" id="product" data-product-section data-product-handle="{{ current_product.handle }}">
+    <div class="wrap product-hero__grid">
+
+      <div class="product-hero__media reveal">
+        <div class="product-gallery" data-gallery>
+          <div class="product-gallery__main" data-zoom-frame>
+            {%- for media in current_product.media limit: 8 -%}
+              <img
+                src="{{ media | image_url: width: 1400 }}"
+                alt="{{ media.alt | default: current_product.title }}"
+                class="product-gallery__image{% if forloop.first %} is-active{% endif %}"
+                data-media-id="{{ media.id }}"
+                width="1400"
+                height="{{ 1400 | divided_by: media.aspect_ratio | round }}"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              >
+            {%- else -%}
+              <div class="product-gallery__placeholder">{{ current_product.title | slice: 0, 1 }}</div>
+            {%- endfor -%}
+
+            {%- for block in overlay_blocks -%}
+              <div class="overlay-badge overlay-badge--{{ block.settings.position }}" {{ block.shopify_attributes }}>
+                <span>{{ block.settings.line1 }}</span>
+                {%- if block.settings.line2 != blank -%}<em>{{ block.settings.line2 }}</em>{%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+          {%- if current_product.media.size > 1 -%}
+            <div class="product-gallery__thumbs" data-gallery-thumbs>
+              {%- for media in current_product.media limit: 8 -%}
+                <button type="button" class="product-gallery__thumb{% if forloop.first %} is-active{% endif %}" data-media-id="{{ media.id }}" aria-label="Ver imagen {{ forloop.index }}">
+                  <img src="{{ media | image_url: width: 200 }}" alt="" width="200" height="{{ 200 | divided_by: media.aspect_ratio | round }}" loading="lazy">
+                </button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="product-hero__info reveal" style="--reveal-delay:100ms">
+
+        {%- if section.settings.status_badge != blank -%}
+          <span class="status-badge">{{ section.settings.status_badge }}</span>
+        {%- endif -%}
+
+        {%- if section.settings.show_rating -%}
+          <div class="rating-row">
+            <span class="rating-row__stars" style="--rating:{{ section.settings.rating }}">
+              {%- for i in (1..5) -%}{% render 'icon-star' %}{%- endfor -%}
+            </span>
+            <span class="rating-row__count">({{ section.settings.review_summary }})</span>
+          </div>
+        {%- endif -%}
+
+        <h1 class="product-hero__title">{{ current_product.title }}</h1>
+
+        {%- if badge_blocks.size > 0 -%}
+          <ul class="pill-badges">
+            {%- for block in badge_blocks -%}
+              <li {{ block.shopify_attributes }}>
+                {%- if block.settings.show_icon -%}<span class="pill-badges__icon">{% render 'icon-shield' %}</span>{%- endif -%}
+                {{ block.settings.text }}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        <div class="product-hero__buybox">
+          {%- if bundle_blocks.size > 0 -%}
+            {%- if section.settings.bundle_label != blank -%}
+              <div class="section-divider"><span>{{ section.settings.bundle_label }}</span></div>
+            {%- endif -%}
+
+            <div class="bundle-list" data-bundle-list>
+              {%- for block in bundle_blocks -%}
+                <label class="bundle-option{% if forloop.first %} is-selected{% endif %}" data-bundle-option data-quantity="{{ block.settings.quantity }}" {{ block.shopify_attributes }}>
+                  {%- if block.settings.ribbon != blank -%}<span class="bundle-option__ribbon">{{ block.settings.ribbon }}</span>{%- endif -%}
+                  <input type="radio" name="bundle" {% if forloop.first %}checked{% endif %} data-bundle-radio>
+                  <span class="bundle-option__radio" aria-hidden="true"></span>
+                  <span class="bundle-option__body">
+                    <span class="bundle-option__title">{{ block.settings.title }}</span>
+                    <span class="bundle-option__subtitle">{{ block.settings.subtitle }}</span>
+                  </span>
+                  <span class="bundle-option__price">
+                    <span class="bundle-option__price-current">{{ block.settings.price }}</span>
+                    {%- if block.settings.compare_price != blank -%}<span class="bundle-option__price-compare">{{ block.settings.compare_price }}</span>{%- endif -%}
+                  </span>
+                </label>
+              {%- endfor -%}
+            </div>
+          {%- else -%}
+            {% render 'price', product: current_product, variant: current_variant %}
+          {%- endif -%}
+
+          {%- for option in current_product.options_with_values -%}
+            <fieldset class="option-picker" data-option-index="option{{ forloop.index }}">
+              <legend>{{ option.name }}</legend>
+              <div class="option-picker__values">
+                {%- for value in option.values -%}
+                  <button type="button" class="option-pill{% if value == option.selected_value %} is-selected{% endif %}" data-option-value="{{ value | escape }}">{{ value }}</button>
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          {%- endfor -%}
+
+          {%- if section.settings.urgency_text != blank -%}
+            <p class="urgency-line"><span class="urgency-line__dot"></span><strong>{{ section.settings.urgency_label }}</strong> {{ section.settings.urgency_text }}</p>
+          {%- endif -%}
+
+          <div class="product-form-wrap" data-product-json='{{ current_product.variants | json | escape }}'>
+            <form method="post" action="{{ routes.cart_add_url }}" id="product-form" data-product-form>
+              <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+              <input type="hidden" name="quantity" value="1" data-qty-input>
+
+              <button type="submit" class="btn btn--cta btn--add-to-cart btn--full" data-add-to-cart {% unless current_variant.available %}disabled{% endunless %}>
+                <span data-add-to-cart-text>{% if current_variant.available %}{{ section.settings.cta_text | default: 'Añadir al carrito' }}{% else %}Agotado{% endif %}</span>
+              </button>
+            </form>
+          </div>
+
+          {%- if section.settings.authenticity_text != blank -%}
+            <p class="authenticity-line">{% render 'icon-shield' %}<strong>{{ section.settings.authenticity_label }}</strong> {{ section.settings.authenticity_text }}</p>
+          {%- endif -%}
+
+          {%- if perk_blocks.size > 0 -%}
+            <ul class="perk-row">
+              {%- for block in perk_blocks -%}
+                <li {{ block.shopify_attributes }}>
+                  <button type="button" class="perk-row__icon" data-tooltip="{{ block.settings.label }}" aria-label="{{ block.settings.label }}">
+                    {%- case block.settings.icon -%}
+                      {%- when 'heart' -%}{% render 'icon-heart' %}
+                      {%- when 'repeat' -%}{% render 'icon-repeat' %}
+                      {%- when 'truck' -%}{% render 'icon-truck' %}
+                      {%- else -%}{% render 'icon-shield' %}
+                    {%- endcase -%}
+                  </button>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sticky-buy" data-sticky-buy hidden>
+    <div class="wrap sticky-buy__row">
+      <div class="sticky-buy__info">
+        <span class="sticky-buy__title">{{ current_product.title }}</span>
+        {% render 'price', product: current_product, variant: current_variant %}
+      </div>
+      <button type="button" class="btn btn--cta btn--small" data-sticky-add>
+        <span>{{ section.settings.cta_text | default: 'Añadir' }}</span>
+      </button>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Producto",
+  "settings": [
+    { "type": "product", "id": "featured_product", "label": "Producto destacado", "info": "Se usa en Inicio. En la página de producto se ignora y se muestra el producto visitado." },
+    { "type": "text", "id": "status_badge", "label": "Insignia de estado", "default": "PRODUCTO DESTACADO | POCAS UNIDADES" },
+    { "type": "checkbox", "id": "show_rating", "label": "Mostrar valoración", "default": true },
+    { "type": "range", "id": "rating", "label": "Valoración (0–5)", "min": 0, "max": 5, "step": 0.1, "default": 4.8 },
+    { "type": "text", "id": "review_summary", "label": "Texto de reseñas", "default": "+891 reseñas de más de 17.500 clientes" },
+    { "type": "text", "id": "bundle_label", "label": "Texto sobre los packs (vacío = ocultar)", "default": "El mejor precio del año" },
+    { "type": "text", "id": "cta_text", "label": "Texto del botón de compra", "default": "Añadir al carrito" },
+    { "type": "text", "id": "urgency_label", "label": "Urgencia — palabra en negrita", "default": "Pocas unidades." },
+    { "type": "text", "id": "urgency_text", "label": "Urgencia — resto del texto", "default": "límite de 4 unidades por pedido" },
+    { "type": "text", "id": "authenticity_label", "label": "Confianza — palabra en negrita", "default": "Solo disponible aquí." },
+    { "type": "text", "id": "authenticity_text", "label": "Confianza — resto del texto", "default": "no compres en canales no oficiales" }
+  ],
+  "blocks": [
+    {
+      "type": "pill_badge",
+      "name": "Insignia pequeña",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "FORMULADO EN ESPAÑA" },
+        { "type": "checkbox", "id": "show_icon", "label": "Mostrar icono", "default": true }
+      ]
+    },
+    {
+      "type": "bundle_option",
+      "name": "Pack de precio",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "1 unidad" },
+        { "type": "text", "id": "subtitle", "label": "Subtítulo", "default": "Envío gratis" },
+        { "type": "text", "id": "price", "label": "Precio a mostrar", "default": "39,00 €" },
+        { "type": "text", "id": "compare_price", "label": "Precio tachado (opcional)", "default": "" },
+        { "type": "text", "id": "ribbon", "label": "Etiqueta destacada (opcional)", "default": "" },
+        { "type": "number", "id": "quantity", "label": "Cantidad que añade al carrito", "default": 1, "info": "El precio mostrado es solo texto: para que el importe real coincida, crea un descuento automático en Shopify para esa cantidad." }
+      ]
+    },
+    {
+      "type": "overlay_badge",
+      "name": "Insignia sobre la foto",
+      "settings": [
+        { "type": "select", "id": "position", "label": "Posición", "options": [
+          { "value": "top-right", "label": "Arriba derecha" },
+          { "value": "bottom-right", "label": "Abajo derecha" },
+          { "value": "top-left", "label": "Arriba izquierda" },
+          { "value": "bottom-left", "label": "Abajo izquierda" }
+        ], "default": "top-right" },
+        { "type": "text", "id": "line1", "label": "Línea 1", "default": "2M+" },
+        { "type": "text", "id": "line2", "label": "Línea 2", "default": "Unidades vendidas" }
+      ]
+    },
+    {
+      "type": "perk_icon",
+      "name": "Icono inferior",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icono", "options": [
+          { "value": "heart", "label": "Corazón (favoritos)" },
+          { "value": "repeat", "label": "Recompra" },
+          { "value": "truck", "label": "Envío" }
+        ], "default": "heart" },
+        { "type": "text", "id": "label", "label": "Texto (tooltip)", "default": "Guardar en favoritos" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Producto",
+      "blocks": [
+        { "type": "bundle_option", "settings": { "title": "Compra 1", "subtitle": "Envío gratis", "price": "39,00 €", "compare_price": "", "ribbon": "", "quantity": 1 } },
+        { "type": "bundle_option", "settings": { "title": "Compra 2, llévate 1 gratis", "subtitle": "Ahorras 39,00 € + envío gratis", "price": "78,00 €", "compare_price": "117,00 €", "ribbon": "MÁS ELEGIDO", "quantity": 3 } },
+        { "type": "pill_badge", "settings": { "text": "MÁS VENDIDO", "show_icon": false } },
+        { "type": "pill_badge", "settings": { "text": "FORMULADO EN ESPAÑA", "show_icon": true } },
+        { "type": "overlay_badge", "settings": { "position": "top-right", "line1": "2M+", "line2": "Unidades vendidas" } },
+        { "type": "perk_icon", "settings": { "icon": "heart", "label": "Guardar en favoritos" } },
+        { "type": "perk_icon", "settings": { "icon": "repeat", "label": "Suscríbete y ahorra" } },
+        { "type": "perk_icon", "settings": { "icon": "truck", "label": "Envío en 24–48h" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

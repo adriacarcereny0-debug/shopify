@@ -1,0 +1,43 @@
+<section class="simple-content">
+  <div class="wrap wrap--narrow">
+    <p class="eyebrow reveal">{{ section.settings.eyebrow }}</p>
+    <h1 class="simple-content__heading reveal">{{ section.settings.heading | default: page.title }}</h1>
+    <div class="simple-content__body reveal">
+      {%- if section.settings.body != blank -%}
+        {{ section.settings.body }}
+      {%- elsif page -%}
+        {{ page.content }}
+      {%- elsif article -%}
+        {{ article.content }}
+      {%- elsif search -%}
+        {%- if search.performed -%}
+          <p>{{ search.results_count }} resultado(s) para "{{ search.terms }}"</p>
+          <ul class="simple-content__results">
+            {%- for item in search.results -%}
+              <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        {%- else -%}
+          {% render 'search-form' %}
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+    {%- if section.settings.show_home_link -%}
+      <a href="{{ routes.root_url }}" class="btn btn--primary">
+        <span>Volver al inicio</span>
+        <span class="btn__icon">→</span>
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Contenido simple",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "" },
+    { "type": "text", "id": "heading", "label": "Título (vacío = usa el de la página)", "default": "" },
+    { "type": "richtext", "id": "body", "label": "Texto (vacío = usa el contenido de la página)", "default": "" },
+    { "type": "checkbox", "id": "show_home_link", "label": "Mostrar botón para volver al inicio", "default": false }
+  ]
+}
+{% endschema %}

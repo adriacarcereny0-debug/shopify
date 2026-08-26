@@ -1,0 +1,59 @@
+<section class="cart-page">
+  <div class="wrap wrap--narrow">
+    <h1 class="cart-page__heading reveal">Tu carrito</h1>
+
+    {%- if cart.item_count == 0 -%}
+      <div class="cart-page__empty reveal">
+        <p>Tu carrito está vacío.</p>
+        <a href="{{ routes.root_url }}" class="btn btn--primary">
+          <span>Seguir viendo</span>
+          <span class="btn__icon">→</span>
+        </a>
+      </div>
+    {%- else -%}
+      <form action="{{ routes.cart_url }}" method="post" id="cart-form" data-cart-form>
+        <div class="cart-page__list">
+          {%- for item in cart.items -%}
+            <div class="cart-line" data-cart-line data-line-key="{{ item.key }}">
+              <div class="cart-line__media">
+                {%- if item.image -%}
+                  <img src="{{ item.image | image_url: width: 240 }}" alt="{{ item.title }}" width="240" height="{{ 240 | divided_by: item.image.aspect_ratio | round }}" loading="lazy">
+                {%- endif -%}
+              </div>
+              <div class="cart-line__info">
+                <a href="{{ item.url }}" class="cart-line__title">{{ item.product.title }}</a>
+                {%- unless item.variant.title == 'Default Title' -%}
+                  <p class="cart-line__variant">{{ item.variant.title }}</p>
+                {%- endunless -%}
+                <div class="cart-line__row">
+                  <div class="qty-stepper qty-stepper--small" data-qty-stepper data-line-key="{{ item.key }}">
+                    <button type="button" class="qty-stepper__btn" data-qty-decrease aria-label="Reducir cantidad">{% render 'icon-minus' %}</button>
+                    <input type="number" data-qty-input value="{{ item.quantity }}" min="0" inputmode="numeric" aria-label="Cantidad">
+                    <button type="button" class="qty-stepper__btn" data-qty-increase aria-label="Aumentar cantidad">{% render 'icon-plus' %}</button>
+                  </div>
+                  <span class="cart-line__price">{{ item.final_line_price | money }}</span>
+                </div>
+              </div>
+              <button type="button" class="cart-line__remove" data-cart-remove aria-label="Eliminar">{% render 'icon-close' %}</button>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="cart-page__summary reveal">
+          <div class="cart-page__subtotal">
+            <span>Subtotal</span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+          <p class="cart-page__note">Los impuestos y el envío se calculan en el pago.</p>
+          <button type="submit" name="checkout" class="btn btn--primary btn--full">
+            <span>Finalizar compra</span>
+            <span class="btn__icon">→</span>
+          </button>
+        </div>
+      </form>
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{ "name": "Carrito" }
+{% endschema %}

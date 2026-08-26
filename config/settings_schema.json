@@ -1,0 +1,156 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Atelier — tema de producto único",
+    "theme_version": "1.0.0",
+    "theme_author": "Mid Projects Factory",
+    "theme_documentation_url": "https://github.com/adriacarcereny0-debug/shopify#readme",
+    "theme_support_url": "https://github.com/adriacarcereny0-debug/shopify/issues"
+  },
+  {
+    "name": "Marca",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo global (se usa en la pantalla de «próximamente» y como respaldo en la cabecera)"
+      },
+      {
+        "type": "text",
+        "id": "brand_text",
+        "label": "Nombre de marca (respaldo si no hay logo)",
+        "default": ""
+      }
+    ]
+  },
+  {
+    "name": "Colores",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Fondo de página",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Superficie / tarjetas",
+        "default": "#F7F6F3"
+      },
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "Texto principal",
+        "default": "#15140F"
+      },
+      {
+        "type": "color",
+        "id": "color_ink_soft",
+        "label": "Texto secundario",
+        "default": "#6B6A63"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Acento (urgencia / oferta)",
+        "default": "#D6392A"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_soft",
+        "label": "Acento suave",
+        "default": "#FBE9E6"
+      },
+      {
+        "type": "color",
+        "id": "color_cta",
+        "label": "Botón de compra",
+        "default": "#14140F"
+      },
+      {
+        "type": "color",
+        "id": "color_star",
+        "label": "Estrellas de valoración",
+        "default": "#F5B400"
+      },
+      {
+        "type": "color",
+        "id": "color_line",
+        "label": "Líneas divisorias",
+        "default": "#E8E6E0"
+      }
+    ]
+  },
+  {
+    "name": "Tipografía",
+    "settings": [
+      {
+        "type": "select",
+        "id": "font_display",
+        "label": "Fuente de titulares",
+        "options": [
+          {
+            "value": "'Sora', sans-serif",
+            "label": "Sora (moderna, geométrica)"
+          },
+          {
+            "value": "'Fraunces', serif",
+            "label": "Fraunces (serif editorial)"
+          }
+        ],
+        "default": "'Sora', sans-serif"
+      },
+      {
+        "type": "select",
+        "id": "font_body",
+        "label": "Fuente de texto",
+        "options": [
+          {
+            "value": "'Manrope', sans-serif",
+            "label": "Manrope"
+          },
+          {
+            "value": "'Public Sans', sans-serif",
+            "label": "Public Sans"
+          }
+        ],
+        "default": "'Manrope', sans-serif"
+      }
+    ]
+  },
+  {
+    "name": "Diseño",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Ancho máximo del contenido (px)",
+        "min": 1100,
+        "max": 1600,
+        "step": 20,
+        "default": 1360
+      },
+      {
+        "type": "range",
+        "id": "radius",
+        "label": "Redondeo de tarjetas (px)",
+        "min": 0,
+        "max": 32,
+        "step": 2,
+        "default": 20
+      }
+    ]
+  },
+  {
+    "name": "Pago y envío",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_trust_row",
+        "label": "Mostrar franja de confianza bajo el botón de compra",
+        "default": true
+      }
+    ]
+  }
+]

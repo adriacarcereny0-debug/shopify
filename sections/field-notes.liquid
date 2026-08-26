@@ -1,0 +1,44 @@
+<section class="field-notes">
+  <div class="wrap">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="field-notes__heading reveal">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    <div class="field-notes__table reveal">
+      {%- for block in section.blocks -%}
+        <div class="field-notes__row" {{ block.shopify_attributes }}>
+          <span class="field-notes__label">{{ block.settings.label }}</span>
+          <span class="field-notes__value">{{ block.settings.value }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Notas de producto",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "Notas de producto" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Fila",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Etiqueta", "default": "Cuidado" },
+        { "type": "text", "id": "value", "label": "Valor", "default": "Lavar a mano, secar a la sombra" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Notas de producto",
+      "blocks": [
+        { "type": "row", "settings": { "label": "Material", "value": "Algodón orgánico 100%" } },
+        { "type": "row", "settings": { "label": "Cuidado", "value": "Lavar a mano, secar a la sombra" } },
+        { "type": "row", "settings": { "label": "Origen", "value": "Diseñado y hecho en España" } },
+        { "type": "row", "settings": { "label": "Envío", "value": "24–48h en península" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

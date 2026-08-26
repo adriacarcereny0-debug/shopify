@@ -1,0 +1,2 @@
+# Configuración de Theme Check (https://shopify.dev/docs/storefronts/themes/tools/theme-check)
+extends: theme-check:recommended

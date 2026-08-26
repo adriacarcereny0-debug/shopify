@@ -1,0 +1,55 @@
+<section class="testimonials">
+  <div class="wrap">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="testimonials__heading reveal">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    <div class="testimonials__grid">
+      {%- for block in section.blocks -%}
+        <figure class="testimonial-card reveal" style="--reveal-delay:{{ forloop.index0 | times: 80 }}ms" {{ block.shopify_attributes }}>
+          <div class="testimonial-card__inner">
+            <div class="testimonial-card__stars" aria-label="{{ block.settings.rating }} de 5 estrellas">
+              {%- for i in (1..5) -%}
+                <span class="star{% if i <= block.settings.rating %} is-filled{% endif %}">★</span>
+              {%- endfor -%}
+            </div>
+            <blockquote>{{ block.settings.quote }}</blockquote>
+            <figcaption>
+              <span class="testimonial-card__name">{{ block.settings.name }}</span>
+              {%- if block.settings.detail != blank -%}<span class="testimonial-card__detail">{{ block.settings.detail }}</span>{%- endif -%}
+            </figcaption>
+          </div>
+        </figure>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Testimonios",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "Lo que dicen" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Reseña",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Valoración", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "quote", "label": "Cita", "default": "Un producto que cumple lo que promete, con un acabado impecable." },
+        { "type": "text", "id": "name", "label": "Nombre", "default": "Marta G." },
+        { "type": "text", "id": "detail", "label": "Detalle (ciudad, etc.)", "default": "Barcelona" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonios",
+      "blocks": [
+        { "type": "review", "settings": { "rating": 5, "quote": "Un producto que cumple lo que promete, con un acabado impecable.", "name": "Marta G.", "detail": "Barcelona" } },
+        { "type": "review", "settings": { "rating": 5, "quote": "Llegó rapidísimo y la calidad sorprende para el precio.", "name": "Jordi P.", "detail": "Valencia" } },
+        { "type": "review", "settings": { "rating": 4, "quote": "Justo lo que buscaba, volveré a comprar.", "name": "Laia S.", "detail": "Madrid" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

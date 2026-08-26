@@ -1,0 +1,39 @@
+<section class="simple-content">
+  <div class="wrap wrap--narrow">
+    <p class="eyebrow reveal">{{ section.settings.eyebrow }}</p>
+    <h1 class="simple-content__heading reveal">{{ section.settings.heading }}</h1>
+    <p class="simple-content__body reveal">{{ section.settings.subheading }}</p>
+
+    {% form 'contact' %}
+      {%- if form.posted_successfully? -%}
+        <p class="site-footer__success reveal">Gracias, te responderemos lo antes posible.</p>
+      {%- else -%}
+        {%- if form.errors -%}
+          <div class="reveal" style="color:var(--color-accent); margin-bottom:16px;">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+        <div class="contact-form reveal">
+          <div class="contact-form__row">
+            <input type="text" name="contact[name]" placeholder="Nombre" required>
+            <input type="email" name="contact[email]" placeholder="Correo electrónico" required value="{{ form.email }}">
+          </div>
+          <textarea name="contact[body]" rows="5" placeholder="Tu mensaje" required></textarea>
+          <button type="submit" class="btn btn--cta">
+            <span>Enviar mensaje</span>
+          </button>
+        </div>
+      {%- endif -%}
+    {% endform %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Formulario de contacto",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "Contacto" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Hablemos" },
+    { "type": "text", "id": "subheading", "label": "Subtítulo", "default": "¿Dudas sobre el producto o tu pedido? Escríbenos." }
+  ]
+}
+{% endschema %}

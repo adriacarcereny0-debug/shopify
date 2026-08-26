@@ -1,0 +1,21 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "color_bg": "#FFFFFF",
+      "color_surface": "#F7F6F3",
+      "color_ink": "#15140F",
+      "color_ink_soft": "#6B6A63",
+      "color_accent": "#D6392A",
+      "color_accent_soft": "#FBE9E6",
+      "color_line": "#E8E6E0",
+      "font_display": "'Sora', sans-serif",
+      "font_body": "'Manrope', sans-serif",
+      "page_width": 1360,
+      "radius": 20,
+      "show_trust_row": true,
+      "color_cta": "#14140F",
+      "color_star": "#F5B400"
+    }
+  }
+}

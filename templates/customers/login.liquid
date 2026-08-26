@@ -1,0 +1,69 @@
+<section class="simple-content account">
+  <div class="wrap wrap--narrow">
+
+    <div id="recover-password" class="account__panel" style="display:none">
+      <p class="eyebrow">Recuperar contraseña</p>
+      <h1 class="simple-content__heading">¿Has olvidado tu contraseña?</h1>
+      <p class="account__note">Te enviaremos un correo para crear una nueva.</p>
+      {% form 'recover_customer_password' %}
+        {%- if form.posted_successfully? -%}
+          <p class="account__success">Te hemos enviado un correo con las instrucciones.</p>
+        {%- endif -%}
+        {{ form.errors | default_errors }}
+        <div class="form-field">
+          <label for="recover-email">Correo electrónico</label>
+          <input type="email" id="recover-email" name="email" autocomplete="email" required>
+        </div>
+        <button type="submit" class="btn btn--cta"><span>Enviar instrucciones</span></button>
+      {% endform %}
+      <button type="button" class="account__link" data-account-toggle="login">Volver a iniciar sesión</button>
+    </div>
+
+    <div id="login" class="account__panel">
+      <p class="eyebrow">Mi cuenta</p>
+      <h1 class="simple-content__heading">Iniciar sesión</h1>
+      {% form 'customer_login' %}
+        {{ form.errors | default_errors }}
+        <div class="form-field">
+          <label for="customer-email">Correo electrónico</label>
+          <input type="email" id="customer-email" name="customer[email]" autocomplete="email" required>
+        </div>
+        <div class="form-field">
+          <label for="customer-password">Contraseña</label>
+          <input type="password" id="customer-password" name="customer[password]" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn btn--cta"><span>Entrar</span></button>
+      {% endform %}
+      <button type="button" class="account__link" data-account-toggle="recover">He olvidado mi contraseña</button>
+      {%- if shop.customer_accounts_optional or shop.customer_accounts_enabled -%}
+        <p class="account__note">¿Aún no tienes cuenta? <a href="{{ routes.account_register_url }}">Crear una cuenta</a></p>
+      {%- endif -%}
+    </div>
+
+    {%- if shop.checkout.guest_login -%}
+      <div class="account__panel">
+        <h2 class="account__subheading">Consultar un pedido como invitado</h2>
+        {% form 'guest_login' %}
+          <button type="submit" class="account__link">Continuar como invitado</button>
+        {% endform %}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<script>
+  (function () {
+    var login = document.getElementById('login');
+    var recover = document.getElementById('recover-password');
+    if (!login || !recover) return;
+    function show(which) {
+      login.style.display = which === 'login' ? '' : 'none';
+      recover.style.display = which === 'recover' ? '' : 'none';
+    }
+    document.querySelectorAll('[data-account-toggle]').forEach(function (el) {
+      el.addEventListener('click', function () { show(el.getAttribute('data-account-toggle')); });
+    });
+    if (window.location.hash === '#recover-password') show('recover');
+  })();
+</script>

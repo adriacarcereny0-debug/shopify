@@ -1,0 +1,28 @@
+<section class="story">
+  <div class="wrap story__grid">
+    <div class="story__text reveal">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      <div class="story__body">{{ section.settings.body }}</div>
+    </div>
+    <div class="story__media reveal" style="--reveal-delay:120ms">
+      {%- if section.settings.image != blank -%}
+        <img src="{{ section.settings.image | image_url: width: 1200 }}" alt="{{ section.settings.image.alt | default: section.settings.heading }}" width="1200" height="{{ 1200 | divided_by: section.settings.image.aspect_ratio | round }}" loading="lazy">
+      {%- else -%}
+        <div class="story__media-placeholder"></div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Historia del producto",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "El proceso" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Hecho para durar" },
+    { "type": "richtext", "id": "body", "label": "Texto", "default": "<p>Cuenta aquí la historia, los materiales o el proceso detrás de tu producto. Este bloque es completamente editable desde el editor de temas.</p>" },
+    { "type": "image_picker", "id": "image", "label": "Imagen" }
+  ],
+  "presets": [{ "name": "Historia del producto" }]
+}
+{% endschema %}

@@ -1,0 +1,59 @@
+<section class="simple-content account">
+  <div class="wrap">
+    <p class="eyebrow">Pedido {{ order.name }}</p>
+    <h1 class="simple-content__heading">Detalle del pedido</h1>
+    <p class="account__note">Realizado el {{ order.created_at | date: "%d/%m/%Y a las %H:%M" }}</p>
+
+    {%- if order.cancelled -%}
+      <p class="account__note">Pedido cancelado el {{ order.cancelled_at | date: "%d/%m/%Y" }}. {{ order.cancel_reason_label }}</p>
+    {%- endif -%}
+
+    <div class="account__table-wrap">
+      <table class="account__table">
+        <thead>
+          <tr><th>Producto</th><th>Precio</th><th>Cantidad</th><th>Total</th></tr>
+        </thead>
+        <tbody>
+          {%- for line_item in order.line_items -%}
+            <tr>
+              <td>
+                {{ line_item.title }}
+                {%- if line_item.fulfillment -%}
+                  <br><small>Enviado el {{ line_item.fulfillment.created_at | date: "%d/%m/%Y" }}
+                  {%- if line_item.fulfillment.tracking_url %} — <a href="{{ line_item.fulfillment.tracking_url }}">Seguimiento</a>{% endif -%}
+                  </small>
+                {%- endif -%}
+              </td>
+              <td>{{ line_item.price | money }}</td>
+              <td>{{ line_item.quantity }}</td>
+              <td>{{ line_item.quantity | times: line_item.price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+        <tfoot>
+          <tr><td colspan="3">Subtotal</td><td>{{ order.subtotal_price | money }}</td></tr>
+          {%- for shipping_method in order.shipping_methods -%}
+            <tr><td colspan="3">Envío ({{ shipping_method.title }})</td><td>{{ shipping_method.price | money }}</td></tr>
+          {%- endfor -%}
+          {%- for tax_line in order.tax_lines -%}
+            <tr><td colspan="3">Impuestos ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%)</td><td>{{ tax_line.price | money }}</td></tr>
+          {%- endfor -%}
+          <tr><td colspan="3"><strong>Total</strong></td><td><strong>{{ order.total_price | money }}</strong></td></tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="account__addresses">
+      <div class="account__address">
+        <h2 class="account__subheading">Dirección de facturación</h2>
+        <p>{{ order.billing_address | format_address }}</p>
+      </div>
+      <div class="account__address">
+        <h2 class="account__subheading">Dirección de envío</h2>
+        <p>{{ order.shipping_address | format_address }}</p>
+      </div>
+    </div>
+
+    <a href="{{ routes.account_url }}" class="account__link">Volver a mi cuenta</a>
+  </div>
+</section>

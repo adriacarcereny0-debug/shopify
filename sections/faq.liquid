@@ -1,0 +1,48 @@
+<section class="faq">
+  <div class="wrap wrap--narrow">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="faq__heading reveal">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    <div class="faq__list" data-accordion>
+      {%- for block in section.blocks -%}
+        <div class="faq__item reveal" style="--reveal-delay:{{ forloop.index0 | times: 60 }}ms" {{ block.shopify_attributes }}>
+          <button type="button" class="faq__question" data-accordion-trigger aria-expanded="false">
+            <span>{{ block.settings.question }}</span>
+            <span class="faq__icon">{% render 'icon-plus' %}</span>
+          </button>
+          <div class="faq__answer" data-accordion-panel>
+            <div class="faq__answer-inner">{{ block.settings.answer }}</div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Preguntas frecuentes",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "Preguntas frecuentes" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Pregunta",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Pregunta", "default": "¿Cuánto tarda el envío?" },
+        { "type": "richtext", "id": "answer", "label": "Respuesta", "default": "<p>Los pedidos en península llegan en 24–48h laborables.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Preguntas frecuentes",
+      "blocks": [
+        { "type": "question", "settings": { "question": "¿Cuánto tarda el envío?", "answer": "<p>Los pedidos en península llegan en 24–48h laborables.</p>" } },
+        { "type": "question", "settings": { "question": "¿Puedo devolverlo?", "answer": "<p>Sí, tienes 30 días desde la recepción para devolverlo sin coste.</p>" } },
+        { "type": "question", "settings": { "question": "¿Qué métodos de pago aceptáis?", "answer": "<p>Tarjeta, Apple Pay, Google Pay y el resto de métodos habilitados en tu tienda.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

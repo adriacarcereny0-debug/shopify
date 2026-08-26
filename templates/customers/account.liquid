@@ -1,0 +1,40 @@
+<section class="simple-content account">
+  <div class="wrap">
+    <p class="eyebrow">Mi cuenta</p>
+    <h1 class="simple-content__heading">Hola, {{ customer.first_name | default: customer.email }}</h1>
+
+    <div class="account__meta">
+      <a href="{{ routes.account_addresses_url }}" class="account__link">Mis direcciones ({{ customer.addresses_count }})</a>
+      <a href="{{ routes.account_logout_url }}" class="account__link">Cerrar sesión</a>
+    </div>
+
+    <h2 class="account__subheading">Mis pedidos</h2>
+    {%- paginate customer.orders by 20 -%}
+      {%- if customer.orders.size > 0 -%}
+        <div class="account__table-wrap">
+          <table class="account__table">
+            <thead>
+              <tr><th>Pedido</th><th>Fecha</th><th>Pago</th><th>Envío</th><th>Total</th></tr>
+            </thead>
+            <tbody>
+              {%- for order in customer.orders -%}
+                <tr>
+                  <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+                  <td>{{ order.created_at | date: "%d/%m/%Y" }}</td>
+                  <td>{{ order.financial_status_label }}</td>
+                  <td>{{ order.fulfillment_status_label }}</td>
+                  <td>{{ order.total_price | money }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+        {%- if paginate.pages > 1 -%}
+          <div class="account__pagination">{{ paginate | default_pagination }}</div>
+        {%- endif -%}
+      {%- else -%}
+        <p class="account__note">Todavía no has hecho ningún pedido.</p>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>

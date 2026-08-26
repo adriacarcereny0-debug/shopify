@@ -1,0 +1,76 @@
+<section class="simple-content account">
+  <div class="wrap wrap--narrow">
+    <p class="eyebrow">Mi cuenta</p>
+    <h1 class="simple-content__heading">Mis direcciones</h1>
+
+    <div class="account__panel">
+      <h2 class="account__subheading">Añadir una dirección</h2>
+      {% form 'customer_address', customer.new_address %}
+        {{ form.errors | default_errors }}
+        <div class="form-field"><label for="address-first">Nombre</label><input type="text" id="address-first" name="address[first_name]" value="{{ form.first_name }}" autocomplete="given-name"></div>
+        <div class="form-field"><label for="address-last">Apellidos</label><input type="text" id="address-last" name="address[last_name]" value="{{ form.last_name }}" autocomplete="family-name"></div>
+        <div class="form-field"><label for="address-company">Empresa (opcional)</label><input type="text" id="address-company" name="address[company]" value="{{ form.company }}"></div>
+        <div class="form-field"><label for="address-1">Dirección</label><input type="text" id="address-1" name="address[address1]" value="{{ form.address1 }}" autocomplete="address-line1"></div>
+        <div class="form-field"><label for="address-2">Dirección (línea 2)</label><input type="text" id="address-2" name="address[address2]" value="{{ form.address2 }}" autocomplete="address-line2"></div>
+        <div class="form-field"><label for="address-city">Ciudad</label><input type="text" id="address-city" name="address[city]" value="{{ form.city }}" autocomplete="address-level2"></div>
+        <div class="form-field"><label for="address-zip">Código postal</label><input type="text" id="address-zip" name="address[zip]" value="{{ form.zip }}" autocomplete="postal-code"></div>
+        <div class="form-field">
+          <label for="address-country">País</label>
+          <select id="address-country" name="address[country]" data-default="{{ form.country }}">{{ country_option_tags }}</select>
+        </div>
+        <div class="form-field"><label for="address-phone">Teléfono</label><input type="tel" id="address-phone" name="address[phone]" value="{{ form.phone }}" autocomplete="tel"></div>
+        <label class="account__checkbox">
+          {{ form.set_as_default_checkbox }} Usar como dirección predeterminada
+        </label>
+        <button type="submit" class="btn btn--cta"><span>Guardar dirección</span></button>
+      {% endform %}
+    </div>
+
+    {%- paginate customer.addresses by 10 -%}
+      {%- for address in customer.addresses -%}
+        <div class="account__panel">
+          <h2 class="account__subheading">
+            {{ address.first_name }} {{ address.last_name }}
+            {%- if address == customer.default_address %} · Predeterminada{% endif -%}
+          </h2>
+          <p>{{ address | format_address }}</p>
+          <div class="account__meta">
+            <a class="account__link" href="{{ routes.account_addresses_url }}?edit={{ address.id }}">Editar</a>
+            {% form 'customer_address', address %}
+              <input type="hidden" name="_method" value="delete">
+              <button type="submit" class="account__link" onclick="return confirm('¿Seguro que quieres eliminar esta dirección?')">Eliminar</button>
+            {% endform %}
+          </div>
+
+          {%- if request.query_string contains address.id -%}
+            <div class="account__panel">
+              <h3 class="account__subheading">Editar dirección</h3>
+              {% form 'customer_address', address %}
+                {{ form.errors | default_errors }}
+                <div class="form-field"><label for="edit-first-{{ address.id }}">Nombre</label><input type="text" id="edit-first-{{ address.id }}" name="address[first_name]" value="{{ address.first_name }}"></div>
+                <div class="form-field"><label for="edit-last-{{ address.id }}">Apellidos</label><input type="text" id="edit-last-{{ address.id }}" name="address[last_name]" value="{{ address.last_name }}"></div>
+                <div class="form-field"><label for="edit-company-{{ address.id }}">Empresa</label><input type="text" id="edit-company-{{ address.id }}" name="address[company]" value="{{ address.company }}"></div>
+                <div class="form-field"><label for="edit-a1-{{ address.id }}">Dirección</label><input type="text" id="edit-a1-{{ address.id }}" name="address[address1]" value="{{ address.address1 }}"></div>
+                <div class="form-field"><label for="edit-a2-{{ address.id }}">Dirección (línea 2)</label><input type="text" id="edit-a2-{{ address.id }}" name="address[address2]" value="{{ address.address2 }}"></div>
+                <div class="form-field"><label for="edit-city-{{ address.id }}">Ciudad</label><input type="text" id="edit-city-{{ address.id }}" name="address[city]" value="{{ address.city }}"></div>
+                <div class="form-field"><label for="edit-zip-{{ address.id }}">Código postal</label><input type="text" id="edit-zip-{{ address.id }}" name="address[zip]" value="{{ address.zip }}"></div>
+                <div class="form-field">
+                  <label for="edit-country-{{ address.id }}">País</label>
+                  <select id="edit-country-{{ address.id }}" name="address[country]">{{ country_option_tags }}</select>
+                </div>
+                <div class="form-field"><label for="edit-phone-{{ address.id }}">Teléfono</label><input type="tel" id="edit-phone-{{ address.id }}" name="address[phone]" value="{{ address.phone }}"></div>
+                <label class="account__checkbox">{{ form.set_as_default_checkbox }} Usar como dirección predeterminada</label>
+                <button type="submit" class="btn btn--cta"><span>Guardar cambios</span></button>
+              {% endform %}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+      {%- if paginate.pages > 1 -%}
+        <div class="account__pagination">{{ paginate | default_pagination }}</div>
+      {%- endif -%}
+    {%- endpaginate -%}
+
+    <a href="{{ routes.account_url }}" class="account__link">Volver a mi cuenta</a>
+  </div>
+</section>

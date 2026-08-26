@@ -1,0 +1,4 @@
+<form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+  <input type="search" name="q" placeholder="Buscar" aria-label="Buscar" value="{{ search.terms | escape }}">
+  <button type="submit" aria-label="Buscar">{% render 'icon-chevron' %}</button>
+</form>

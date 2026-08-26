@@ -1,0 +1,48 @@
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div class="site-footer__brand">
+      <span class="site-footer__wordmark">{{ shop.name }}</span>
+      {%- if section.settings.tagline != blank -%}<p class="site-footer__tagline">{{ section.settings.tagline }}</p>{%- endif -%}
+    </div>
+
+    {%- if section.settings.show_newsletter -%}
+      <div class="site-footer__newsletter">
+        <p class="site-footer__newsletter-label">{{ section.settings.newsletter_heading }}</p>
+        {% form 'customer' %}
+          {%- if form.posted_successfully? -%}
+            <p class="site-footer__success">Gracias por suscribirte.</p>
+          {%- else -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="site-footer__newsletter-form">
+              <input type="email" name="contact[email]" placeholder="tu@email.com" required aria-label="Correo electrónico">
+              <button type="submit" aria-label="Suscribirse">{% render 'icon-plus' %}</button>
+            </div>
+          {%- endif -%}
+        {% endform %}
+      </div>
+    {%- endif -%}
+
+    <div class="site-footer__links">
+      {%- for link in linklists.footer.links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- else -%}
+        {%- if shop.policies.privacy_policy -%}<a href="{{ shop.policies.privacy_policy.url }}">{{ shop.policies.privacy_policy.title }}</a>{%- endif -%}
+        {%- if shop.policies.refund_policy -%}<a href="{{ shop.policies.refund_policy.url }}">{{ shop.policies.refund_policy.title }}</a>{%- endif -%}
+        {%- if shop.policies.terms_of_service -%}<a href="{{ shop.policies.terms_of_service.url }}">{{ shop.policies.terms_of_service.title }}</a>{%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  <div class="wrap site-footer__bottom">
+    <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+  </div>
+</footer>
+{% schema %}
+{
+  "name": "Pie de página",
+  "settings": [
+    { "type": "text", "id": "tagline", "label": "Eslogan corto", "default": "" },
+    { "type": "checkbox", "id": "show_newsletter", "label": "Mostrar suscripción por correo", "default": true },
+    { "type": "text", "id": "newsletter_heading", "label": "Texto de la suscripción", "default": "Novedades y lanzamientos" }
+  ]
+}
+{% endschema %}

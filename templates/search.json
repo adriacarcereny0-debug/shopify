@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "simple-content",
+      "settings": { "eyebrow": "Buscar", "heading": "Buscar", "body": "", "show_home_link": false }
+    }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,73 @@
+{% layout none %}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ shop.name }} — Tarjeta regalo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  {{ content_for_header }}
+  <style>
+    :root{
+      --color-bg: {{ settings.color_bg }};
+      --color-surface: {{ settings.color_surface }};
+      --color-ink: {{ settings.color_ink }};
+      --color-ink-soft: {{ settings.color_ink_soft }};
+      --color-accent: {{ settings.color_accent }};
+      --color-accent-soft: {{ settings.color_accent_soft }};
+      --color-cta: {{ settings.color_cta }};
+      --color-star: {{ settings.color_star }};
+      --color-line: {{ settings.color_line }};
+      --font-display: {{ settings.font_display }};
+      --font-body: {{ settings.font_body }};
+      --page-width: {{ settings.page_width }}px;
+      --radius: {{ settings.radius }}px;
+    }
+  </style>
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+</head>
+<body class="tpl-gift-card">
+  <section class="simple-content account">
+    <div class="wrap wrap--narrow">
+      <p class="eyebrow">Tarjeta regalo</p>
+      <h1 class="simple-content__heading">{{ gift_card.balance | money }} para gastar en {{ shop.name }}</h1>
+
+      {%- if gift_card.expired -%}
+        <p class="account__note">Esta tarjeta caducó el {{ gift_card.expires_on | date: "%d/%m/%Y" }}.</p>
+      {%- elsif gift_card.expires_on -%}
+        <p class="account__note">Válida hasta el {{ gift_card.expires_on | date: "%d/%m/%Y" }}.</p>
+      {%- endif -%}
+
+      {%- if gift_card.enabled == false -%}
+        <p class="account__note">Esta tarjeta regalo está desactivada.</p>
+      {%- endif -%}
+
+      <div class="account__panel">
+        <p class="account__note">Código de la tarjeta</p>
+        <p class="gift-card__code">{{ gift_card.code | format_code }}</p>
+        {%- if gift_card.balance != gift_card.initial_value -%}
+          <p class="account__note">Saldo inicial: {{ gift_card.initial_value | money }}</p>
+        {%- endif -%}
+        <div id="gift-card-qr" class="gift-card__qr"></div>
+      </div>
+
+      <a href="{{ shop.url }}" class="btn btn--cta"><span>Ir a la tienda</span></a>
+      <button type="button" class="account__link" onclick="window.print()">Imprimir</button>
+    </div>
+  </section>
+
+  <script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}" defer="defer"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (typeof QRCode === 'undefined') return;
+      new QRCode(document.getElementById('gift-card-qr'), {
+        text: {{ gift_card.qr_identifier | json }},
+        width: 160,
+        height: 160
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "simple-content",
+      "settings": { "eyebrow": "", "heading": "", "body": "", "show_home_link": true }
+    }
+  },
+  "order": ["main"]
+}
