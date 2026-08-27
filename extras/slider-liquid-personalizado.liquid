@@ -1,0 +1,268 @@
+{%- comment -%}
+  ============================================================
+  SLIDER · pegar dentro de un bloque "Liquid personalizado"
+  ============================================================
+
+  CÓMO EDITARLO (solo tocas la zona marcada como EDITA AQUÍ):
+
+  1. Sube tus banners en: Configuración → Archivos → Cargar archivos.
+     Copia el enlace de cada imagen (botón de copiar enlace).
+  2. Pega ese enlace en "imagen" y, si tienes una versión vertical
+     para móvil, en "imagen_movil" (si la dejas vacía usa la de arriba).
+  3. "enlace" es a dónde lleva el slide: /collections/verano ,
+     /products/zapatillas-x , o vacío ("") si no quieres que sea clicable.
+  4. Para añadir un slide más: copia un bloque entero desde
+     <div class="vdx-slide"> hasta su </div> y cámbiale los datos.
+{%- endcomment -%}
+
+{%- comment -%} ========== EDITA AQUÍ ========== {%- endcomment -%}
+
+{%- assign segundos = 5 -%}              {%- comment -%} tiempo por slide {%- endcomment -%}
+{%- assign pasar_solo = true -%}         {%- comment -%} true = autoplay {%- endcomment -%}
+{%- assign ancho_completo = true -%}     {%- comment -%} true = de lado a lado de la pantalla {%- endcomment -%}
+{%- assign proporcion_pc = '16 / 9' -%}  {%- comment -%} forma del banner en ordenador {%- endcomment -%}
+{%- assign proporcion_movil = '4 / 5' -%}{%- comment -%} forma del banner en móvil {%- endcomment -%}
+{%- assign color_puntos = '#39FF6A' -%}
+{%- assign color_boton_fondo = '#39FF6A' -%}
+{%- assign color_boton_texto = '#052E12' -%}
+
+<div class="vdx" data-vdx data-autoplay="{{ pasar_solo }}" data-interval="{{ segundos | times: 1000 }}" aria-roledescription="carrusel" aria-label="Ofertas destacadas">
+  <div class="vdx-viewport">
+    <div class="vdx-track" data-track tabindex="0">
+
+      {%- comment -%} ---------- SLIDE 1 ---------- {%- endcomment -%}
+      <a class="vdx-slide" href="/collections/all">
+        <img class="vdx-img vdx-pc" src="PEGA_AQUI_LA_URL_DE_LA_IMAGEN_1" alt="Renueva tu outfit de verano" width="2000" height="1125" fetchpriority="high">
+        <img class="vdx-img vdx-movil" src="PEGA_AQUI_LA_URL_MOVIL_1" alt="" width="800" height="1000">
+        <span class="vdx-scrim"></span>
+        <span class="vdx-content">
+          <span class="vdx-eyebrow">Renueva tu outfit</span>
+          <span class="vdx-heading">DE VERANO</span>
+          <span class="vdx-sub">1x39,99 €  ·  2x59,99 €</span>
+          <span class="vdx-btn">Comprar ahora</span>
+        </span>
+      </a>
+
+      {%- comment -%} ---------- SLIDE 2 ---------- {%- endcomment -%}
+      <a class="vdx-slide" href="/collections/all">
+        <img class="vdx-img vdx-pc" src="PEGA_AQUI_LA_URL_DE_LA_IMAGEN_2" alt="Nueva colección" width="2000" height="1125" loading="lazy">
+        <img class="vdx-img vdx-movil" src="PEGA_AQUI_LA_URL_MOVIL_2" alt="" width="800" height="1000" loading="lazy">
+        <span class="vdx-scrim"></span>
+        <span class="vdx-content">
+          <span class="vdx-eyebrow">Nueva colección</span>
+          <span class="vdx-heading">ZAPATILLAS</span>
+          <span class="vdx-sub">Desde 49,99 €</span>
+          <span class="vdx-btn">Ver modelos</span>
+        </span>
+      </a>
+
+      {%- comment -%} ---------- SLIDE 3 ---------- {%- endcomment -%}
+      <a class="vdx-slide" href="/collections/all">
+        <img class="vdx-img vdx-pc" src="PEGA_AQUI_LA_URL_DE_LA_IMAGEN_3" alt="Envío gratis" width="2000" height="1125" loading="lazy">
+        <img class="vdx-img vdx-movil" src="PEGA_AQUI_LA_URL_MOVIL_3" alt="" width="800" height="1000" loading="lazy">
+        <span class="vdx-scrim"></span>
+        <span class="vdx-content">
+          <span class="vdx-eyebrow">Envío gratis</span>
+          <span class="vdx-heading">EN TODA ESPAÑA</span>
+          <span class="vdx-sub">En pedidos superiores a 60 €</span>
+          <span class="vdx-btn">Empezar</span>
+        </span>
+      </a>
+
+    </div>
+
+    <button type="button" class="vdx-arrow vdx-prev" data-prev aria-label="Anterior">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button type="button" class="vdx-arrow vdx-next" data-next aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <div class="vdx-dots" data-dots></div>
+  </div>
+</div>
+
+{%- comment -%} ========== FIN DE LA ZONA EDITABLE ========== {%- endcomment -%}
+
+<style>
+  .vdx {
+    position: relative;
+    {% if ancho_completo %}width: 100vw; margin-left: calc(50% - 50vw);{% else %}width: 100%;{% endif %}
+    background: #000;
+    overflow: hidden;
+  }
+  .vdx-viewport { position: relative; }
+  .vdx-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .vdx-track::-webkit-scrollbar { display: none; }
+  .vdx-slide {
+    position: relative;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: block;
+    aspect-ratio: {{ proporcion_pc }};
+    background: #111;
+    text-decoration: none;
+    color: #fff;
+  }
+  .vdx-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .vdx-movil { display: none; }
+  .vdx-scrim {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.6) 100%);
+  }
+  .vdx-content {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    display: grid; justify-items: center; text-align: center; gap: 10px;
+    padding: clamp(18px, 4vw, 56px) clamp(16px, 4vw, 48px) clamp(40px, 5vw, 64px);
+  }
+  .vdx-eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; opacity: .9; }
+  .vdx-heading { font-size: clamp(26px, 5vw, 62px); font-weight: 800; line-height: 1.02; letter-spacing: -.02em; }
+  .vdx-sub { font-size: clamp(14px, 1.4vw, 18px); opacity: .92; }
+  .vdx-btn {
+    margin-top: 4px; padding: 13px 26px; border-radius: 999px; font-weight: 700; font-size: 15px;
+    background: {{ color_boton_fondo }}; color: {{ color_boton_texto }};
+  }
+  .vdx-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+    width: 44px; height: 44px; display: grid; place-items: center;
+    border: 0; border-radius: 999px; cursor: pointer; background: #fff; color: #111;
+  }
+  .vdx-prev { left: 14px; }
+  .vdx-next { right: 14px; }
+  .vdx-arrow svg { width: 20px; height: 20px; }
+  .vdx-dots {
+    position: absolute; left: 0; right: 0; bottom: 14px; z-index: 2;
+    display: flex; justify-content: center; gap: 8px;
+  }
+  .vdx-dot {
+    width: 9px; height: 9px; padding: 0; border: 0; border-radius: 999px; cursor: pointer;
+    background: {{ color_puntos }}; opacity: .45; transition: opacity .2s ease, width .2s ease;
+  }
+  .vdx-dot[aria-current="true"] { opacity: 1; width: 26px; }
+  .vdx-arrow:focus-visible, .vdx-dot:focus-visible, .vdx-slide:focus-visible {
+    outline: 3px solid {{ color_puntos }}; outline-offset: 3px;
+  }
+  @media (max-width: 749px) {
+    .vdx-slide { aspect-ratio: {{ proporcion_movil }}; }
+    .vdx-arrow { display: none; }
+    .vdx-movil { display: block; }
+    .vdx-pc { display: none; }
+    /* Si ese slide no tiene imagen de móvil, se sigue viendo la de ordenador */
+    .vdx-slide.vdx-solo-pc .vdx-pc { display: block; }
+  }
+  @media (prefers-reduced-motion: reduce) { .vdx-track { scroll-behavior: auto; } }
+</style>
+
+<script>
+  (function () {
+    function init(root) {
+      if (!root || root.dataset.ready === '1') return;
+      root.dataset.ready = '1';
+
+      var track = root.querySelector('[data-track]');
+      var slides = root.querySelectorAll('.vdx-slide');
+      var dotsBox = root.querySelector('[data-dots]');
+      var prev = root.querySelector('[data-prev]');
+      var next = root.querySelector('[data-next]');
+      if (!track || slides.length === 0) return;
+
+      // Imagen de móvil vacía o sin rellenar: se quita y ese slide usa la de ordenador
+      root.querySelectorAll('.vdx-movil').forEach(function (img) {
+        var src = img.getAttribute('src') || '';
+        if (!src || src.indexOf('PEGA_AQUI') === 0) {
+          var slide = img.closest('.vdx-slide');
+          if (slide) slide.classList.add('vdx-solo-pc');
+          img.remove();
+        }
+      });
+      // Lo mismo para slides sin imagen de ordenador rellenada
+      root.querySelectorAll('.vdx-pc').forEach(function (img) {
+        var src = img.getAttribute('src') || '';
+        if (!src || src.indexOf('PEGA_AQUI') === 0) img.remove();
+      });
+
+      if (slides.length < 2) {
+        if (prev) prev.remove();
+        if (next) next.remove();
+        if (dotsBox) dotsBox.remove();
+        return;
+      }
+
+      var index = 0, timer = null;
+      var autoplay = root.dataset.autoplay === 'true';
+      var interval = parseInt(root.dataset.interval, 10) || 5000;
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      var dots = [];
+      for (var i = 0; i < slides.length; i++) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'vdx-dot';
+        b.setAttribute('aria-label', 'Ir al slide ' + (i + 1));
+        if (i === 0) b.setAttribute('aria-current', 'true');
+        (function (n, btn) {
+          btn.addEventListener('click', function () { go(n); restart(); });
+        })(i, b);
+        dotsBox.appendChild(b);
+        dots.push(b);
+      }
+
+      function go(i) {
+        index = (i + slides.length) % slides.length;
+        track.scrollTo({ left: slides[index].offsetLeft, behavior: reduced ? 'auto' : 'smooth' });
+        sync();
+      }
+      function sync() {
+        for (var d = 0; d < dots.length; d++) {
+          if (d === index) dots[d].setAttribute('aria-current', 'true');
+          else dots[d].removeAttribute('aria-current');
+        }
+      }
+      function start() { if (!autoplay) return; stop(); timer = setInterval(function () { if (!document.hidden) go(index + 1); }, interval); }
+      function stop() { if (timer) clearInterval(timer); timer = null; }
+      function restart() { stop(); start(); }
+
+      if (prev) prev.addEventListener('click', function (e) { e.preventDefault(); go(index - 1); restart(); });
+      if (next) next.addEventListener('click', function (e) { e.preventDefault(); go(index + 1); restart(); });
+
+      var t;
+      track.addEventListener('scroll', function () {
+        clearTimeout(t);
+        t = setTimeout(function () {
+          var closest = 0, min = Infinity;
+          for (var s = 0; s < slides.length; s++) {
+            var dist = Math.abs(slides[s].offsetLeft - track.scrollLeft);
+            if (dist < min) { min = dist; closest = s; }
+          }
+          if (closest !== index) { index = closest; sync(); }
+        }, 90);
+      }, { passive: true });
+
+      track.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { e.preventDefault(); go(index + 1); restart(); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); go(index - 1); restart(); }
+      });
+
+      root.addEventListener('mouseenter', stop);
+      root.addEventListener('mouseleave', start);
+      document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+      window.addEventListener('resize', function () { track.scrollTo({ left: slides[index].offsetLeft, behavior: 'auto' }); });
+
+      start();
+    }
+
+    function initAll(scope) { (scope || document).querySelectorAll('[data-vdx]').forEach(init); }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { initAll(); });
+    else initAll();
+    document.addEventListener('shopify:section:load', function (e) { initAll(e.target); });
+  })();
+</script>
