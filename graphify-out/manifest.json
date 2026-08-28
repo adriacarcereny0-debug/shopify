@@ -1,122 +1,128 @@
 {
+  ".claude/hooks/graphify-update.py": {
+    "mtime": 1787951747.0403867,
+    "seen": 1787951803.7162464,
+    "ast_hash": "a77af23233d7fa7192eae46b4f3e5cf5",
+    "semantic_hash": ""
+  },
+  ".claude/settings.json": {
+    "mtime": 1787951836.316392,
+    "seen": 1787951836.6935241,
+    "ast_hash": "8dd456923a3662d88fe77064e3644c61",
+    "semantic_hash": ""
+  },
   "assets/theme.js": {
     "mtime": 1787912719.5345094,
-    "seen": 1787913095.7422485,
+    "seen": 1787951803.7162514,
     "ast_hash": "b7a2cbd1aede4dd757b33e1af3931957",
     "semantic_hash": ""
   },
   "config/settings_data.json": {
     "mtime": 1787912719.5345094,
-    "seen": 1787913095.7422512,
+    "seen": 1787951803.7162533,
     "ast_hash": "4826fa46edb28e9405060a3df8c99ca0",
     "semantic_hash": ""
   },
   "config/settings_schema.json": {
     "mtime": 1787912719.5354788,
-    "seen": 1787913095.7422528,
+    "seen": 1787951803.7162545,
     "ast_hash": "b667d9357de178d218365e7c7c00c59b",
     "semantic_hash": ""
   },
   "locales/en.default.json": {
     "mtime": 1787912719.5366802,
-    "seen": 1787913095.7422543,
+    "seen": 1787951803.7162554,
     "ast_hash": "7babed7f563dc84e867e2fd361f9f32e",
     "semantic_hash": ""
   },
   "locales/en.default.schema.json": {
     "mtime": 1787912719.5374439,
-    "seen": 1787913095.7422557,
+    "seen": 1787951803.7162569,
     "ast_hash": "6251af65ec7e776365872eec5387471c",
     "semantic_hash": ""
   },
   "templates/404.json": {
     "mtime": 1787912719.5412211,
-    "seen": 1787913095.7422569,
+    "seen": 1787951803.7162664,
     "ast_hash": "b7c2b7914062d8e58a3c4493cee8f2b1",
     "semantic_hash": ""
   },
   "templates/article.json": {
     "mtime": 1787912719.5443113,
-    "seen": 1787913095.7422585,
+    "seen": 1787951803.7162685,
     "ast_hash": "5e50df15ff9552e997862408a460b1dc",
     "semantic_hash": ""
   },
   "templates/blog.json": {
     "mtime": 1787912719.5443113,
-    "seen": 1787913095.7422676,
+    "seen": 1787951803.7162697,
     "ast_hash": "5e50df15ff9552e997862408a460b1dc",
     "semantic_hash": ""
   },
   "templates/cart.json": {
     "mtime": 1787912719.5443304,
-    "seen": 1787913095.7422698,
+    "seen": 1787951803.716271,
     "ast_hash": "e5866f413c608928edf91b0cfc65626e",
     "semantic_hash": ""
   },
   "templates/collection.json": {
     "mtime": 1787912719.5443304,
-    "seen": 1787913095.7422707,
+    "seen": 1787951803.716272,
     "ast_hash": "791f96f4e21a2a7fa4832a411e24114d",
     "semantic_hash": ""
   },
   "templates/index.json": {
     "mtime": 1787912719.5460556,
-    "seen": 1787913095.7422721,
+    "seen": 1787951803.716273,
     "ast_hash": "c685979fbd43788e50c5cea0298966d1",
     "semantic_hash": ""
   },
   "templates/list-collections.json": {
     "mtime": 1787912719.5460556,
-    "seen": 1787913095.7422736,
+    "seen": 1787951803.7162743,
     "ast_hash": "791f96f4e21a2a7fa4832a411e24114d",
     "semantic_hash": ""
   },
   "templates/page.contact.json": {
     "mtime": 1787912719.5460556,
-    "seen": 1787913095.7422743,
+    "seen": 1787951803.7162752,
     "ast_hash": "299c9cad322d5eadaa879bc2b07ead86",
     "semantic_hash": ""
   },
   "templates/page.json": {
     "mtime": 1787912719.5483305,
-    "seen": 1787913095.7422752,
+    "seen": 1787951803.7162762,
     "ast_hash": "ab354fee77526cc402a6b33c9319e8dd",
     "semantic_hash": ""
   },
   "templates/product.json": {
     "mtime": 1787912719.5483305,
-    "seen": 1787913095.7422764,
+    "seen": 1787951803.7162776,
     "ast_hash": "c685979fbd43788e50c5cea0298966d1",
     "semantic_hash": ""
   },
   "templates/search.json": {
     "mtime": 1787912719.5483305,
-    "seen": 1787913095.7422774,
+    "seen": 1787951803.716279,
     "ast_hash": "b002e73f0a6eb424f75a197eeb93b35a",
     "semantic_hash": ""
   },
   ".theme-check.yml": {
     "mtime": 1787912719.5323305,
-    "seen": 1787913095.7422783,
+    "seen": 1787951803.7162805,
     "ast_hash": "c51cb5a27e07c0cec4634a276d680dbf",
     "semantic_hash": ""
   },
   "README.md": {
     "mtime": 1787912719.5323305,
-    "seen": 1787913095.7422795,
+    "seen": 1787951803.7162821,
     "ast_hash": "9d1f11f27100e6e0cac998323ae2f9f2",
     "semantic_hash": ""
   },
   "extras/README.md": {
     "mtime": 1787912719.5354788,
-    "seen": 1787913095.7422805,
+    "seen": 1787951803.7162836,
     "ast_hash": "f716e558740207ef83abd8e08d910b1b",
-    "semantic_hash": ""
-  },
-  ".claude/settings.json": {
-    "mtime": 1787914140.289399,
-    "seen": 1787914151.5883842,
-    "ast_hash": "a9577f928403bba646d060539b2bcc8f",
     "semantic_hash": ""
   }
 }
