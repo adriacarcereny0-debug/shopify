@@ -1,0 +1,18 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PATH=\"$HOME/.local/bin:$PATH\"; jq -r '.tool_input.file_path // .tool_response.filePath // empty' | { read -r f; [ -n \"$f\" ] || exit 0; d=$(git -C \"$(dirname \"$f\")\" rev-parse --show-toplevel 2>/dev/null) || exit 0; graphify update \"$d\" >/dev/null 2>&1; } 2>/dev/null || true",
+            "async": true,
+            "timeout": 120,
+            "statusMessage": "Actualizando grafo graphify..."
+          }
+        ]
+      }
+    ]
+  }
+}
